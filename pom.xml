@@ -9,7 +9,7 @@
 
     <groupId>com.github.nfalco79</groupId>
     <artifactId>workflow-steps</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Pipeline: Additional Basic Steps</name>
     <description>This plugins add some basic usefull pipeline steps to integrate in their own scripted pipelines.</description>
@@ -36,7 +36,7 @@
         <url>https://github.com/nfalco79/workflow-steps-plugin</url>
         <connection>scm:git:git@github.com:nfalco79/workflow-steps-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:nfalco79/workflow-steps-plugin.git</developerConnection>
-        <tag>workflow-steps-1.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
