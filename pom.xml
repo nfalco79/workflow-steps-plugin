@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.39</version>
+        <version>4.54</version>
     </parent>
 
     <groupId>com.github.nfalco79</groupId>
@@ -22,28 +22,28 @@
         </license>
     </licenses>
 
-	<developers>
-		<developer>
-			<id>nfalco79</id>
-			<name>Nikolas Falco</name>
-		</developer>
-	</developers>
-	<issueManagement>
-		<system>github</system>
-		<url>https://github.com/nfalco79/workflow-steps-plugin/issues</url>
-	</issueManagement>
-
-	<scm>
-		<url>https://github.com/nfalco79/workflow-steps-plugin</url>
-		<connection>scm:git:git@github.com:nfalco79/workflow-steps-plugin.git</connection>
-		<developerConnection>scm:git:git@github.com:nfalco79/workflow-steps-plugin.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+    <developers>
+        <developer>
+            <id>nfalco79</id>
+            <name>Nikolas Falco</name>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/nfalco79/workflow-steps-plugin/issues</url>
+    </issueManagement>
+    <scm>
+        <url>https://github.com/nfalco79/workflow-steps-plugin</url>
+        <connection>scm:git:git@github.com:nfalco79/workflow-steps-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:nfalco79/workflow-steps-plugin.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <java.level>8</java.level>
-        <jenkins.version>2.303.3</jenkins.version>
+        <jenkins.version>2.375.1</jenkins.version>
         <releaseProfiles>release</releaseProfiles>
+        <checkstyle.version>10.7.0</checkstyle.version>
 
         <sonar.organization>nfalco79</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -76,8 +76,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.303.x</artifactId>
-                <version>1155.v77b_fd92a_26fc</version>
+                <artifactId>bom-2.375.x</artifactId>
+                <version>1798.vc671fe94856f</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -120,11 +120,44 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.2.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>${basedir}/checkstyle.xml</configLocation>
+                    <sourceDirectories>${project.build.sourceDirectory}</sourceDirectories>
+                    <testSourceDirectories>${project.build.testSourceDirectory}</testSourceDirectories>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <resourceIncludes>**/*.properties,**/*.jelly</resourceIncludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>enable-jacoco</id>
+            <id>coverage</id>
+            <activation>
+                <property>
+                    <name>env.COVERALLS_REPO_TOKEN</name>
+                </property>
+            </activation>
             <build>
                 <pluginManagement>
                     <plugins>
